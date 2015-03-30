@@ -1,0 +1,27 @@
+<!-- Adds a fixed header bar above some content. IONIC-->
+<ion-header-bar class="bar-royal">
+    <div class="buttons">
+        <button class="button button-icon icon ion-ios-minus-outline"ng-click="data.showDelete = !data.showDelete;">
+        </button><h1 class="title">Time Transport</h1>
+        <button class="button" ui-sref="createComment">New</button>
+    </div>
+</ion-header-bar>
+
+
+<ion-content>
+    <ion-list show-delete="data.showDelete">
+        <ion-item ng-repeat="item in items | orderBy: '-createdAt'"
+                  item="item"
+                  href="#/comment/edit/{{item.objectId}}/{{item.content}}">
+                  <div>
+                      <p>{{item.content}}<p>
+                      {{item.createdAt}}
+                  </div>
+
+            <ion-delete-button class="ion-minus-circled"
+                    ng-click="onItemDelete(item)">
+            </ion-delete-button>
+
+        </ion-item>
+    </ion-list>
+</ion-content>

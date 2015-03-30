@@ -1,0 +1,24 @@
+<ion-header-bar class="bar-royal">
+    <div class="buttons">
+        <button class="button" ui-sref="comments">Retour</button>
+        <h1 class="title">Création d'une Annecdote</h1>
+    </div>
+</ion-header-bar>
+
+<ion-content>
+    <div>
+        <ion-list>
+            <li class="item item-input item-stacked-label">
+                <textarea type="text"
+                          placeholder="place holder"
+                          name="content"
+                          rows="10"
+                          ng-model="Comment.content"
+                          required></textarea>
+            </li>
+            <ion-button class="button button-block button-positive" ng-click="create()">
+                Ajouter
+            </ion-button>
+        </ion-list>
+    </div>
+</ion-content>

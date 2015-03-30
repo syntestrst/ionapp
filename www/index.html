@@ -6,31 +6,102 @@
     <title></title>
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+
+    <!-- CSS CUSTOM -->
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/social-icons.css" rel="stylesheet">
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
 
+    <script>
+          // Facebbok OAuth init
+          window.fbAsyncInit = function() {
+              FB.init({
+                  appId:'1379299842395038',
+                  status:true,
+                  cookie:true,
+                  xfbml:false,
+                  version:'v2.3',
+                  oauth:true
+              })
+          };
+
+
+          // Load the SDK asynchronously
+          (function(d, s, id){
+              var js,fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) {
+                  return;
+              }
+              js = d.createElement(s);
+              js.id = id;
+              js.async = true;
+              js.src = "http://connect.facebook.net/en_US/sdk.js";
+              fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+
+
+          // Facebbok OAuth init - END
+
+
+
+         /* // Google OAuth Init
+          (function () {
+              var po = document.createElement('script');
+              po.type = 'text/javascript';
+              po.async = true;
+              po.src = 'https://apis.google.com/js/client.js?onload=onLoadCallback';
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(po, s);
+          })();
+
+              function onLoadCallback() {
+                  // Replace the API key with yours
+                  gapi.client.setApiKey('AIzaSyC5JgBIrjOGKDAIZLcsvgkjjGkk');
+                  gapi.client.load('plus', 'v1', function () {
+                  });
+          }*/
+          // Google Oauth Init - END
+
+    </script>
+
+<!--TOP LEVEL FRAMEWORK-->
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
-
+<!--PLUGIN-->
+    <!-- ngCordova -->
+    <script src="lib/ngCordova"></script>
+<!--LOW API CROSS PLATFORM -->
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
-    <!-- your app's js -->
+
+    <!-- MY APP.JS -->
+
     <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/oauthapp.js"></script>
+    <script src="https://code.angularjs.org/1.3.9/angular-cookies.js"></script>
+    <!-- CDN i don't want break ionic i think-->
+
+
+
   </head>
   <body ng-app="starter">
+  <script>
+      //alert(window.location);document.addEventListener("deviceready", onDeviceReady, false);
+     /* document.addEventListener("deviceready", onDeviceReady, false);
+      function onDeviceReady() {
+          window.open = cordova.InAppBrowser.open;
+      }*/
 
-    <ion-pane>
-      <ion-header-bar class="bar-stable">
-        <h1 class="title">Ionic Blank Starter</h1>
-      </ion-header-bar>
-      <ion-content>
-      </ion-content>
-    </ion-pane>
-
+  </script>
+  <div id="fb-root"></div>
+  <!--API -->
+    <ion-nav-view animation="slide-left-right"></ion-nav-view>
 
 
   </body>
