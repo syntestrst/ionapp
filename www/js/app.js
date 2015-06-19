@@ -22,7 +22,7 @@ angular.module('starter', ['ionic', 'ngCookies', 'ionapp.controllers','ionapp.se
 
 
         });
-       $rootScope.$on('$stateChangeStart', function (event, next, current){
+      /* $rootScope.$on('$stateChangeStart', function (event, next, current){
                 var userInfo = $cookieStore.get('userInfo');
                 if (!userInfo) {
                     // user not logged in | redirect to login
@@ -36,10 +36,8 @@ angular.module('starter', ['ionic', 'ngCookies', 'ionapp.controllers','ionapp.se
                     $state.go('dashboard');
                 }
 
-            });
-
-
-
+            });*/
+alert('test');
 
 }).config(function($stateProvider, $urlRouterProvider){
 
