@@ -51,26 +51,61 @@ angular.module('ionapp.controllers',[]).controller('ComListController',['$scope'
     }
 
 
-}]).controller('LoginCtrl', ['$scope','$state', function ($scope, $state) {
+}]).controller('LoginCtrl', ['$scope','$state',function ($scope, $state) {
+
+    var fbLogged = new Parse.Promise();
+
+    var fbLoginSuccess = function(response) {
+        if (!response.authResponse){
+            fbLoginError("Cannot find the authResponse");
+            return;
+        }
+        var expDate = new Date(
+            new Date().getTime() + response.authResponse.expiresIn * 1000
+        ).toISOString();
+
+        var authData = {
+            id: String(response.authResponse.userID),
+            access_token: response.authResponse.accessToken,
+            expiration_date: expDate
+        }
+        fbLogged.resolve(authData);
+        console.log(response);
+    };
+
+    var fbLoginError = function(error){
+        fbLogged.reject(error);
+    };
             $scope.Login = function() {
-                Parse.FacebookUtils.logIn(null, {
-                    success: function (user) {
-                        if (!user.existed()) {
 
-                            console.log('User signed up and logged in through Facebook!')
-                            $state.go('comments');
-                        } else {
+                console.log('Login');
+                if (!window.cordova) {
+                    facebookConnectPlugin.browserInit('1379299842395038');
+                }
+                facebookConnectPlugin.login(['email'], fbLoginSuccess, fbLoginError);
 
-                            console.log('User logged in through Facebook!')
-                            $state.go('comments');
-                        }
-                    },
-                    error: function (user, error) {
-                        alert("User cancelled the Facebook login or did not fully authorize.");
-                    }
-                });
+                fbLogged.then( function(authData) {
+                    console.log('Promised');
+                    return Parse.FacebookUtils.logIn(authData);
+                })
+                    .then( function(userObject) {
+                        facebookConnectPlugin.api('/me', null,
+                            function(response) {
+                                console.log(response);
+                                userObject.set('name', response.name);
+                                userObject.set('email', response.email);
+                                userObject.save();
+                            },
+                            function(error) {
+                                console.log(error);
+                            }
+                        );
+                        $state.go('comments');
+                    }, function(error) {
+                        console.log(error);
+                    });
+            };
 
-            }
 }]);
 
 

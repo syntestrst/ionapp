@@ -3,28 +3,29 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'ngCookies', 'ionapp.controllers', 'ionapp.services'])
+angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controllers', 'ionapp.services','ionapp.constants'])
+
 
     // Use this method to register work which should be performed
     // when the injector is done loading all modules.
-    .run(function ($rootScope, $ionicPlatform, $cookieStore, $state) {
+    .run(function ($rootScope, $ionicPlatform, $cookieStore, $state, facebookAppId) {
 
-        $ionicPlatform.ready(function () {
+        $ionicPlatform.ready(function() {
+
 
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             if (window.cordova && window.cordova.plugins.Keyboard) {
                 cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-                //cordova.plugins.inappbrowser.inappbrowser(true);
             }
             if (window.StatusBar) {
                 StatusBar.styleDefault();
             }
 
-
         });
 
     }).config(function ($stateProvider, $urlRouterProvider) {
+
 
         $stateProvider
 
@@ -56,4 +57,8 @@ angular.module('starter', ['ionic', 'ngCookies', 'ionapp.controllers', 'ionapp.s
         $urlRouterProvider.otherwise("login");
 
     });
+    /*.config(["$cordovaFacebook", function ($cordovaFacebook, facebookAppId) {
+        // This is only required for the JavaScript API
+        $cordovaFacebookProvider.setAppID(facebookAppId, "v2.0");
+    }]);*/
 
