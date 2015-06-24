@@ -51,6 +51,26 @@ angular.module('ionapp.controllers',[]).controller('ComListController',['$scope'
     }
 
 
+}]).controller('LoginCtrl', ['$scope','$state', function ($scope, $state) {
+            $scope.Login = function() {
+                Parse.FacebookUtils.logIn(null, {
+                    success: function (user) {
+                        if (!user.existed()) {
+
+                            console.log('User signed up and logged in through Facebook!')
+                            $state.go('comments');
+                        } else {
+
+                            console.log('User logged in through Facebook!')
+                            $state.go('comments');
+                        }
+                    },
+                    error: function (user, error) {
+                        alert("User cancelled the Facebook login or did not fully authorize.");
+                    }
+                });
+
+            }
 }]);
 
 

@@ -2,6 +2,17 @@
  * Created by test on 07/03/2015.
  */
 angular.module('ionapp.services',[]).factory('Comment',['$http', 'PARSE_CREDENTIALS', function($http, PARSE_CREDENTIALS){
+
+   /* All API access is over HTTPS, and accessed via the https://api.parse.com domain.
+    The relative path prefix /1/ indicates that we are currently using version 1 of the API.
+
+    /1/classes/<className> 	POST 	Creating Objects
+    /1/classes/<className>/<objectId> 	GET 	Retrieving Objects
+    /1/classes/<className>/<objectId> 	PUT 	Updating Objects
+    /1/classes/<className> 	GET 	Queries
+    /1/classes/<className>/<objectId> 	DELETE 	Deleting Objects
+
+    */
     return {
 
         getAll:function(){
