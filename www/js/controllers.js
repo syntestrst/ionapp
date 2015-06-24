@@ -86,6 +86,13 @@ angular.module('ionapp.controllers',[]).controller('ComListController',['$scope'
 
                 fbLogged.then( function(authData) {
                     console.log('Promised');
+                    Parse.FacebookUtils.init({ // this line replaces FB.init({
+                        appId: '{facebook-app-id}', // Facebook App ID
+                        status: false,  // check Facebook Login status
+                        cookie: true,  // enable cookies to allow Parse to access the session
+                        xfbml: true,  // initialize Facebook social plugins on the page
+                        version: 'v2.3' // point to the latest Facebook Graph API version
+                    });
                     return Parse.FacebookUtils.logIn(authData);
                 })
                     .then( function(userObject) {
