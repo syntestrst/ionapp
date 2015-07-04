@@ -154,7 +154,7 @@ if (!window.cordova) {
         // Browser wrapper API ONLY
         browserInit: function (appId, version) {
             if (!version) {
-                version = "v2.0";
+                version = "v2.3";
             }
             FB.init({
                 appId      : appId,
@@ -167,7 +167,16 @@ if (!window.cordova) {
 
     // Bake in the JS SDK
     (function () {
+
         if (!window.FB) {
+
+           /* window.fbAsyncInit = function() {
+                FB.init({
+                    appId      : '1379299842395038',
+                    xfbml      : true,
+                    version    : 'v2.3'
+                });
+            };*/
             console.log("launching FB SDK")
             var e = document.createElement('script');
             e.src = document.location.protocol + '//connect.facebook.net/en_US/sdk.js';

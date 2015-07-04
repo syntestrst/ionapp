@@ -10,6 +10,9 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
     // when the injector is done loading all modules.
     .run(function ($rootScope, $ionicPlatform, $cookieStore, $state, facebookAppId) {
 
+        ////////////////////////////////////////////////////////
+        // Device Plugin injected by ionic ho yeah.
+        ////////////////////////
         $ionicPlatform.ready(function() {
 
 
@@ -23,38 +26,84 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
             }
 
         });
+        ///////////////////////////////////////////////////////////////////
+        //// https://docs.angularjs.org/api/ng/service/$rootScope
+        /////////////////////////////////
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
 
-    }).config(function ($stateProvider, $urlRouterProvider) {
+            if(toState.data.require && !Parse.User.current()) {
+                $state.transitionTo("login");
+                event.preventDefault();
+            }
+            });
 
+    }).config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
+        //DISABLE ALL CACHE
+        $ionicConfigProvider.views.maxCache(0);
         $stateProvider
 
             //
-            .state('login', {
+            .state('/HomeStatusController', {
+                url: "/HomeStatusController",
+                controller: 'HomeStatusController',
+                data: {
+                    require: false
+                },
+
+            }).state('login', {
                 url: "/login",
                 templateUrl: "views/login.html",
-                controller: 'LoginCtrl',
-                cache: false // system de cache de ionic.
+                controller: 'LoginController',
+                data: {
+                    require: false
+                },
 
-            }).state('comments', {
+            }).state('logout',{
+                /*url : '/logout',*/
+                controller: 'LogoutController',
+                data: {
+                    require: false
+                },
+
+            })
+            .state('slidemenu', {
+                abstract: true,
+                url: '/slidemenu',
+                controller: 'SlideController',
+                templateUrl: 'views/slide.html',
+                data: {
+                    require: false
+                },
+            })
+            .state('slidemenu.comments', {
                 url: '/comments',
                 controller: 'ComListController',
                 templateUrl: 'views/comments.html',
-                cache: false // system de cache de ionic.
+                data: {
+                    require: false
+                },
 
             }).state('createComment', {
                 url: '/comment/new',
                 controller: 'ComCreateController',
-                templateUrl: 'views/create-comments.html'
+                templateUrl: 'views/create-comments.html',
+                data: {
+                    require: false
+                },
 
             }).state('editcomment', {
                 url: '/comment/edit/:id/:content',
                 controller: 'ComEditController',
-                templateUrl: 'views/edit-comment.html'
+                templateUrl: 'views/edit-comment.html',
+                /*cache: false // system de cache de ionic.*/
+                data: {
+                    require: false
+                },
 
             });
         // default route
-        $urlRouterProvider.otherwise("login");
+        $urlRouterProvider.otherwise("/slidemenu/comments");
 
     });
     /*.config(["$cordovaFacebook", function ($cordovaFacebook, facebookAppId) {
