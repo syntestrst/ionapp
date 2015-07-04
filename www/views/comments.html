@@ -1,9 +1,11 @@
 <!-- Adds a fixed header bar above some content. IONIC-->
 <ion-header-bar class="bar-royal">
     <div class="buttons">
-        <button class="button button-icon icon ion-ios-minus-outline"ng-click="data.showDelete = !data.showDelete;">
-        </button><h1 class="title">Time Transport</h1>
+        <button class="button button-icon icon ion-ios-minus-outline"ng-click="data.showDelete = !data.showDelete;"></button>
+        <h1 class="title">Time Transport</h1>
+        <button class="button" ui-sref="logout">Logout</button>
         <button class="button" ui-sref="createComment">New</button>
+
     </div>
 </ion-header-bar>
 

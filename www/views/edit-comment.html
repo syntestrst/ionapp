@@ -1,6 +1,12 @@
 <ion-header-bar class="bar-royal">
     <div class="buttons">
-        <button class="button" ui-sref="comments">Back</button>
+        <!-- UI-SREF => A directive that binds a link (<a> tag) to a state.
+        If the state has an associated URL,
+        the directive will automatically generate & update the href attribute via the $state.href() method.
+        Clicking the link will trigger a state transition with optional parameters.
+         Also middle-clicking, right-clicking,
+         and ctrl-clicking on the link will be handled natively by the browser.-->
+        <button class="button" ui-sref="slidemenu.comments">Back</button>
         <h1 class="title">Edit Todo</h1>
     </div>
 </ion-header-bar>

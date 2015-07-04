@@ -46,13 +46,30 @@ angular.module('ionapp.controllers',[]).controller('ComListController',['$scope'
 
     $scope.edit=function(){
         Comment.edit($scope.Comment.id,{content:$scope.Comment.content}).success(function(data){
-            $state.go('comments');
+            $state.go('slidemenu.comments');
         });
     }
 
 
-}]).controller('LoginCtrl', ['$scope','$state',function ($scope, $state) {
+}]).controller('HomeStatusController',['$scope','$state' ,function($scope,$state) {
 
+    /*$scope.check = function(){
+    console.log('Check status FB')
+    };
+    if (!window.cordova) {
+        /!*facebookConnectPlugin.browserInit('1379299842395038');*!/
+        console.log('browserInit FB');
+
+    }
+    facebookConnectPlugin.getLoginStatus();*/
+
+
+
+
+}]).controller('LoginController', ['$scope','$state',function ($scope, $state) {
+    ////////////////////////////////////////////////////////
+    // PROMISE JS WTF
+    ////////////////////////////////////////////////////
     var fbLogged = new Parse.Promise();
 
     var fbLoginSuccess = function(response) {
@@ -76,6 +93,10 @@ angular.module('ionapp.controllers',[]).controller('ComListController',['$scope'
     var fbLoginError = function(error){
         fbLogged.reject(error);
     };
+
+    ////////////////////////////////////////////////////////////
+    // LOGIN
+    ///////////////////////////////////////////////////////////
             $scope.Login = function() {
 
                 console.log('Login');
@@ -85,14 +106,14 @@ angular.module('ionapp.controllers',[]).controller('ComListController',['$scope'
                 facebookConnectPlugin.login(['email'], fbLoginSuccess, fbLoginError);
 
                 fbLogged.then( function(authData) {
-                    console.log('Promised');
+                   /* console.log('Promised');
                     Parse.FacebookUtils.init({ // this line replaces FB.init({
-                        appId: '{facebook-app-id}', // Facebook App ID
+                        appId: '1379299842395038', // Facebook App ID
                         status: false,  // check Facebook Login status
                         cookie: true,  // enable cookies to allow Parse to access the session
                         xfbml: true,  // initialize Facebook social plugins on the page
                         version: 'v2.3' // point to the latest Facebook Graph API version
-                    });
+                    });*/
                     return Parse.FacebookUtils.logIn(authData);
                 })
                     .then( function(userObject) {
@@ -112,6 +133,57 @@ angular.module('ionapp.controllers',[]).controller('ComListController',['$scope'
                         console.log(error);
                     });
             };
+
+
+
+}]).controller('LogoutController',['$scope', '$state', function($scope,$state){
+
+    ////////////////////////////////////////////////////////
+    // PROMISE JS WTF
+    ////////////////////////////////////////////////////
+    var fblogout = new Parse.Promise();
+
+    var  fblogoutsucess = function(response){
+
+        fblogout.resolve(response);
+    };
+    var flogouterror = function(error){
+
+        fblogout.reject(error);
+    };
+    ////////////////////////////////////////////
+    // LOGOUT
+    ////////////////////////////////////////////
+
+    facebookConnectPlugin.logout(fblogoutsucess,flogouterror);
+
+    fblogout.then(function(){
+        console.log('you are logout and redirect to login page');
+        $state.go('login');
+    },function(error){
+        console.log(error);
+    })
+    /*;fblogoutsucess = function(){
+        console.log('you are logout and redirect to login page');
+        $state.go('login');
+    };
+    flogouterror = function(){
+    console.log(flogouterror);
+    }*/
+    /*var logout = function () {
+        facebookConnectPlugin.logout(
+            function (response) { alert(JSON.stringify(response)) },
+            function (response) { alert(JSON.stringify(response)) });
+    }*/
+
+
+}]).controller('SlideController',['$scope','$state','$ionicSideMenuDelegate',function($scope, $scope,$ionicSideMenuDelegate){
+
+    /*$ionicSideMenuDelegate
+        $scope.toggleLeft = function() {
+            $ionicSideMenuDelegate.toggleLeft();
+        };
+*/
 
 }]);
 

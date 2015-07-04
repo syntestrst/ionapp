@@ -34,6 +34,7 @@ angular.module('ionapp.services',[]).factory('Comment',['$http', 'PARSE_CREDENTI
             });
         },
 
+
         create:function(data){
             return $http.post('https://www.parse.com/1/classes/comment',data,{
                 headers:{
