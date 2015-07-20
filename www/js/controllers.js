@@ -10,6 +10,7 @@
  *
  *
  */
+
 angular.module('ionapp.controllers',[]).controller('ComListController',['$scope','Comment',function($scope, Comment){
 
     Comment.getAll().success(function(data){
@@ -66,6 +67,9 @@ angular.module('ionapp.controllers',[]).controller('ComListController',['$scope'
 
 
 
+
+
+
 }]).controller('LoginController', ['$scope','$state',function ($scope, $state) {
     ////////////////////////////////////////////////////////
     // PROMISE JS WTF
@@ -101,19 +105,20 @@ angular.module('ionapp.controllers',[]).controller('ComListController',['$scope'
 
                 console.log('Login');
                 if (!window.cordova) {
+                    /* console.log('Promised');
+                     Parse.FacebookUtils.init({ // this line replaces FB.init({
+                     appId: '1379299842395038', // Facebook App ID
+                     status: false,  // check Facebook Login status
+                     cookie: true,  // enable cookies to allow Parse to access the session
+                     xfbml: true,  // initialize Facebook social plugins on the page
+                     version: 'v2.3' // point to the latest Facebook Graph API version
+                     });*/
                     facebookConnectPlugin.browserInit('1379299842395038');
                 }
                 facebookConnectPlugin.login(['email'], fbLoginSuccess, fbLoginError);
 
                 fbLogged.then( function(authData) {
-                   /* console.log('Promised');
-                    Parse.FacebookUtils.init({ // this line replaces FB.init({
-                        appId: '1379299842395038', // Facebook App ID
-                        status: false,  // check Facebook Login status
-                        cookie: true,  // enable cookies to allow Parse to access the session
-                        xfbml: true,  // initialize Facebook social plugins on the page
-                        version: 'v2.3' // point to the latest Facebook Graph API version
-                    });*/
+
                     return Parse.FacebookUtils.logIn(authData);
                 })
                     .then( function(userObject) {
