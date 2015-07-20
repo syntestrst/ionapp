@@ -48,7 +48,7 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
                 url: "/HomeStatusController",
                 controller: 'HomeStatusController',
                 data: {
-                    require: false
+                    require: true,
                 },
 
             }).state('login', {
@@ -103,11 +103,10 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
 
             });
         // default route
-        $urlRouterProvider.otherwise("/slidemenu/comments");
+        $urlRouterProvider.otherwise("/HomeStatusController");
 
     });
     /*.config(["$cordovaFacebook", function ($cordovaFacebook, facebookAppId) {
         // This is only required for the JavaScript API
         $cordovaFacebookProvider.setAppID(facebookAppId, "v2.0");
     }]);*/
-

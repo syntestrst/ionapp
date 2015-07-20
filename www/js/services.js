@@ -65,6 +65,7 @@ angular.module('ionapp.services',[]).factory('Comment',['$http', 'PARSE_CREDENTI
             });
         }
     }
+    
 }]).value('PARSE_CREDENTIALS',{
     APP_ID: 'Wz2ZU7eF3Fur7hp9SIhigKRwCJDC2cQRo3arGWGP',
     REST_API_KEY: 'ZsCQMHOwerQN1uIzsOwugl6PnuhqpzdyqXOhhG3F'
