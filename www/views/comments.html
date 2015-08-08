@@ -1,29 +1,39 @@
 <!-- Adds a fixed header bar above some content. IONIC-->
-<ion-header-bar class="bar-royal">
-    <div class="buttons">
-        <button class="button button-icon icon ion-ios-minus-outline"ng-click="data.showDelete = !data.showDelete;"></button>
-        <h1 class="title">Time Transport</h1>
-        <button class="button" ui-sref="logout">Logout</button>
-        <button class="button" ui-sref="createComment">New</button>
+<ion-view view-title="Titre Aplication" >
 
-    </div>
-</ion-header-bar>
+    <ion-nav-bar class="bar-stable">
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+
+        <ion-nav-buttons side="left" title="test">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+            <button class="button" ui-sref="createComment">New</button>
+        </ion-nav-buttons>
 
 
-<ion-content>
-    <ion-list show-delete="data.showDelete">
-        <ion-item ng-repeat="item in items | orderBy: '-createdAt'"
-                  item="item"
-                  href="#/comment/edit/{{item.objectId}}/{{item.content}}">
-                  <div>
-                      <p>{{item.content}}<p>
-                      <!--{{item.createdAt}}-->
-                  </div>
+    </ion-nav-bar>
 
-            <ion-delete-button class="ion-minus-circled"
-                    ng-click="onItemDelete(item)">
-            </ion-delete-button>
+    <ion-content>
+        <div class="buttons">
+            <button class="button button-icon icon ion-ios-minus-outline"ng-click="data.showDelete = !data.showDelete;"></button>
 
-        </ion-item>
-    </ion-list>
-</ion-content>
+
+        </div>
+        <ion-list show-delete="data.showDelete">
+            <ion-item ng-repeat="item in items | orderBy: '-createdAt'"
+                      item="item"
+                      href="#/comment/edit/{{item.objectId}}/{{item.content}}">
+                <div>
+                    <p>{{item.content}}<p>
+                    <!--{{item.createdAt}}-->
+                </div>
+
+                <ion-delete-button class="ion-minus-circled"
+                                   ng-click="onItemDelete(item)">
+                </ion-delete-button>
+
+            </ion-item>
+        </ion-list>
+    </ion-content>
+
+</ion-view>

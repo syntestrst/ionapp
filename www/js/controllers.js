@@ -11,48 +11,54 @@
  *
  */
 
-angular.module('ionapp.controllers',[]).controller('ComListController',['$scope','Comment',function($scope, Comment){
+angular.module('ionapp.controllers', []).controller('ComListController', ['$scope', 'Comment', function ($scope, Comment) {
 
-    Comment.getAll().success(function(data){
-        $scope.items=data.results; // ok
+    Comment.getAll().success(function (data) {
+        $scope.items = data.results; // ok
 
     });
 
-    $scope.onItemDelete=function(item){
+    $scope.onItemDelete = function (item) {
         Comment.delete(item.objectId);
-        $scope.items.splice($scope.items.indexOf(item),1);
+        $scope.items.splice($scope.items.indexOf(item), 1);
     }
 
-}]).controller('ComCreateController',['$scope', 'Comment','$state',function($scope, Comment, $state){
+}]).controller('ComCreateController', ['$scope', 'Comment', '$state', function ($scope, Comment, $state) {
 
-    $scope.Comment={};
+    $scope.Comment = {};
 
-    $scope.create=function(){
+    $scope.create = function () {
+
+
         /*The argument to the method Comment.create()
          is an object which is serialized and sent as JSON request body*/
-
         Comment.create(
             {
-            content:$scope.Comment.content
-        }
+                content: $scope.Comment.content
+            }
 
-        ).success(function(data){
-        $state.go('comments');
+        ).success(function (data) {
+            $state.go('slidemenu.comments');
         });
     }
 
-}]).controller('ComEditController',['$scope', 'Comment','$state', '$stateParams', function($scope,Comment,$state,$stateParams){
+}]).controller('ComEditController', ['$scope', 'Comment', '$state', '$stateParams', function ($scope, Comment, $state, $stateParams) {
 
-    $scope.Comment={id:$stateParams.id,content:$stateParams.content};
+    $scope.Comment = { id: $stateParams.id, content: $stateParams.content };
 
-    $scope.edit=function(){
-        Comment.edit($scope.Comment.id,{content:$scope.Comment.content}).success(function(data){
+    $scope.edit = function () {
+        Comment.edit($scope.Comment.id, { content: $scope.Comment.content }).success(function (data) {
             $state.go('slidemenu.comments');
         });
     }
 
 
-}]).controller('HomeStatusController',['$scope','$state' ,function($scope,$state) {
+}]).controller('HomeStatusController', ['$scope', '$state', function ($scope, $state) {
+
+    ///////////////////////////////////////////////////////////////////
+    // TODO
+    // check local storage object facebook if ok "go page home" else go "login page"
+    ///////////////////////////////////////////////////////////
 
     /*$scope.check = function(){
     console.log('Check status FB')
@@ -63,21 +69,17 @@ angular.module('ionapp.controllers',[]).controller('ComListController',['$scope'
 
     }
     facebookConnectPlugin.getLoginStatus();*/
+    
+    
 
-
-
-
-
-
-
-}]).controller('LoginController', ['$scope','$state',function ($scope, $state) {
+}]).controller('LoginController', ['$scope', '$state', function ($scope, $state) {
     ////////////////////////////////////////////////////////
     // PROMISE JS WTF
     ////////////////////////////////////////////////////
     var fbLogged = new Parse.Promise();
 
-    var fbLoginSuccess = function(response) {
-        if (!response.authResponse){
+    var fbLoginSuccess = function (response) {
+        if (!response.authResponse) {
             fbLoginError("Cannot find the authResponse");
             return;
         }
@@ -91,68 +93,68 @@ angular.module('ionapp.controllers',[]).controller('ComListController',['$scope'
             expiration_date: expDate
         }
         fbLogged.resolve(authData);
-        console.log(response);
+        console.log(response);                    
     };
 
-    var fbLoginError = function(error){
+    var fbLoginError = function (error) {
         fbLogged.reject(error);
     };
 
     ////////////////////////////////////////////////////////////
     // LOGIN
     ///////////////////////////////////////////////////////////
-            $scope.Login = function() {
+    $scope.Login = function () {
 
-                console.log('Login');
-                if (!window.cordova) {
-                    /* console.log('Promised');
-                     Parse.FacebookUtils.init({ // this line replaces FB.init({
-                     appId: '1379299842395038', // Facebook App ID
-                     status: false,  // check Facebook Login status
-                     cookie: true,  // enable cookies to allow Parse to access the session
-                     xfbml: true,  // initialize Facebook social plugins on the page
-                     version: 'v2.3' // point to the latest Facebook Graph API version
-                     });*/
-                    facebookConnectPlugin.browserInit('1379299842395038');
-                }
-                facebookConnectPlugin.login(['email'], fbLoginSuccess, fbLoginError);
+        console.log('Login');
+        if (!window.cordova) {
+            /* console.log('Promised');
+             Parse.FacebookUtils.init({ // this line replaces FB.init({
+             appId: '1379299842395038', // Facebook App ID
+             status: false,  // check Facebook Login status
+             cookie: true,  // enable cookies to allow Parse to access the session
+             xfbml: true,  // initialize Facebook social plugins on the page
+             version: 'v2.3' // point to the latest Facebook Graph API version
+             });*/
+            facebookConnectPlugin.browserInit('1379299842395038');
+        }
+        facebookConnectPlugin.login(['email'], fbLoginSuccess, fbLoginError);
 
-                fbLogged.then( function(authData) {
+        fbLogged.then(function (authData) {
 
-                    return Parse.FacebookUtils.logIn(authData);
-                })
-                    .then( function(userObject) {
-                        facebookConnectPlugin.api('/me', null,
-                            function(response) {
-                                console.log(response);
-                                userObject.set('name', response.name);
-                                userObject.set('email', response.email);
-                                userObject.save();
-                            },
-                            function(error) {
-                                console.log(error);
-                            }
-                        );
-                        $state.go('comments');
-                    }, function(error) {
+            return Parse.FacebookUtils.logIn(authData);
+        })
+            .then(function (userObject) {
+                facebookConnectPlugin.api('/me', null,
+                    function (response) {
+                        console.log(response);
+                        userObject.set('name', response.name);
+                        userObject.set('email', response.email);
+                        userObject.save();
+                    },
+                    function (error) {
                         console.log(error);
-                    });
-            };
+                    }
+                );
+                $state.go('slidemenu.comments');
+            }, function (error) {
+                console.log(error);
+            });
+    };
 
 
 
-}]).controller('LogoutController',['$scope', '$state', function($scope,$state){
+}]).controller('LogoutController', ['$scope', '$state', function ($scope, $state) {
 
     ////////////////////////////////////////////////////////
     // PROMISE JS WTF
     ////////////////////////////////////////////////////
     var fblogout = new Parse.Promise();
 
-    var  fblogoutsucess = function(response){
+    var fblogoutsucess = function (response) {
 
         fblogout.resolve(response);
     };
-    var flogouterror = function(error){
+    var flogouterror = function (error) {
 
         fblogout.reject(error);
     };
@@ -160,12 +162,12 @@ angular.module('ionapp.controllers',[]).controller('ComListController',['$scope'
     // LOGOUT
     ////////////////////////////////////////////
 
-    facebookConnectPlugin.logout(fblogoutsucess,flogouterror);
+    facebookConnectPlugin.logout(fblogoutsucess, flogouterror);
 
-    fblogout.then(function(){
+    fblogout.then(function () {
         console.log('you are logout and redirect to login page');
         $state.go('login');
-    },function(error){
+    }, function (error) {
         console.log(error);
     })
     /*;fblogoutsucess = function(){
@@ -182,7 +184,7 @@ angular.module('ionapp.controllers',[]).controller('ComListController',['$scope'
     }*/
 
 
-}]).controller('SlideController',['$scope','$state','$ionicSideMenuDelegate',function($scope, $scope,$ionicSideMenuDelegate){
+}]).controller('SlideController', ['$scope', '$state', '$ionicSideMenuDelegate', function ($scope, $scope, $ionicSideMenuDelegate) {
 
     /*$ionicSideMenuDelegate
         $scope.toggleLeft = function() {

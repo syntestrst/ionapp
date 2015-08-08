@@ -41,6 +41,8 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
 
         //DISABLE ALL CACHE
         $ionicConfigProvider.views.maxCache(0);
+
+        // BEGIN STATE
         $stateProvider
 
             //
@@ -48,7 +50,7 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
                 url: "/HomeStatusController",
                 controller: 'HomeStatusController',
                 data: {
-                    require: true,
+                    require: false,
                 },
 
             }).state('login', {
@@ -103,6 +105,7 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
 
             });
         // default route
+        // call url not state
         $urlRouterProvider.otherwise("/HomeStatusController");
 
     });
