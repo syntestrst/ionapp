@@ -53,65 +53,6 @@
 <div id="fb-root"></div>
 <!--<script>
 
-   /* Parse.initialize("Wz2ZU7eF3Fur7hp9SIhigKRwCJDC2cQRo3arGWGP", "N28ThmTj4PG6dKznxxOeutk2Ua5r58vqrjsGEEkU");
-    window.fbAsyncInit = function() {
-        Parse.FacebookUtils.init({ // this line replaces FB.init({
-            appId      : ' ', // Facebook App ID
-            status     : true,  // check Facebook Login status
-            cookie     : true,  // enable cookies to allow Parse to access the session
-            xfbml      : true,  // initialize Facebook social plugins on the page
-            version    : 'v2.3' // point to the latest Facebook Graph API version
-        });
-
-                FB.getLoginStatus(function(response) {
-                    if (response.status === 'connected') {
-                        // user logged in and linked to app
-                        // handle this case HERE
-                    }
-                });
-        console.log('fbAsyncInit');
-        alert('fbAsync');
-    };
-
-    (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-
-    if (window.cordova.platformId == "browser") {
-        alert('cas01');
-        var appId = 123456789;
-        var version = "v2.3"; // or leave blank and default is v2.0
-        facebookConnectPlugin.browserInit(appId, version);
-        console.log('browserinit');
-
-        // version is optional. It refers to the version of API you may want to use.
-    };*/
-
-       var appId = '1379299842395038';
-       facebookConnectPlugin.browserInit(appId);
-       // version is optional. It refers to the version of API you may want to use.
-</script>-->
-<!--<script>
-    if(!window.cordova) {
-        window.fbAsyncInit = function() {
-            var appId = '1379299842395038';
-            facebookConnectPlugin.browserInit(appId);
-            /*fbLoaded = 'true';*/
-        };
-    }
-    (function(d){
-        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement('script'); js.id = id; js.async = true;
-        js.src = "//connect.facebook.net/en_US/all.js";
-        ref.parentNode.insertBefore(js, ref);
-    }(document));
-</script>-->
 <!-- Need to place at the end to prevent appendChild error -->
 <script src="lib/facebookConnectplugin/facebookConnectPlugin.js"></script>
 </body>
