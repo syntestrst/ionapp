@@ -69,55 +69,40 @@ angular.module('ionapp.controllers', []).controller('ComListController', ['$scop
 
     }
     facebookConnectPlugin.getLoginStatus();*/
-    
+
+
     
 
 }]).controller('LoginController', ['$scope', '$state', function ($scope, $state) {
-    ////////////////////////////////////////////////////////
-    // PROMISE JS WTF
-    ////////////////////////////////////////////////////
-    var fbLogged = new Parse.Promise();
 
-    var fbLoginSuccess = function (response) {
-        if (!response.authResponse) {
-            fbLoginError("Cannot find the authResponse");
-            return;
-        }
-        var expDate = new Date(
-            new Date().getTime() + response.authResponse.expiresIn * 1000
-        ).toISOString();
 
-        var authData = {
-            id: String(response.authResponse.userID),
-            access_token: response.authResponse.accessToken,
-            expiration_date: expDate
-        }
-        fbLogged.resolve(authData);
-        console.log(response);                    
-    };
-
-    var fbLoginError = function (error) {
-        fbLogged.reject(error);
-    };
-
-    ////////////////////////////////////////////////////////////
-    // LOGIN
-    ///////////////////////////////////////////////////////////
     $scope.Login = function () {
+        ////////////////////////////////////////////////////////
+        // PROMISE JS WTF
+        ////////////////////////////////////////////////////
+        var fbLogged = new Parse.Promise();
 
-        console.log('Login');
-        if (!window.cordova) {
-            /* console.log('Promised');
-             Parse.FacebookUtils.init({ // this line replaces FB.init({
-             appId: '1379299842395038', // Facebook App ID
-             status: false,  // check Facebook Login status
-             cookie: true,  // enable cookies to allow Parse to access the session
-             xfbml: true,  // initialize Facebook social plugins on the page
-             version: 'v2.3' // point to the latest Facebook Graph API version
-             });*/
-            facebookConnectPlugin.browserInit('1379299842395038');
-        }
-        facebookConnectPlugin.login(['email'], fbLoginSuccess, fbLoginError);
+        var fbLoginSuccess = function (response) {
+            if (!response.authResponse) {
+                fbLoginError("Cannot find the authResponse");
+                return;
+            }
+            var expDate = new Date(
+                new Date().getTime() + response.authResponse.expiresIn * 1000
+            ).toISOString();
+
+            var authData = {
+                id: String(response.authResponse.userID),
+                access_token: response.authResponse.accessToken,
+                expiration_date: expDate
+            }
+            fbLogged.resolve(authData);
+            console.log(response);
+        };
+
+        var fbLoginError = function (error) {
+            fbLogged.reject(error);
+        };
 
         fbLogged.then(function (authData) {
 
@@ -139,6 +124,28 @@ angular.module('ionapp.controllers', []).controller('ComListController', ['$scop
             }, function (error) {
                 console.log(error);
             });
+
+       /* var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;*/
+        if (window.cordova) {
+                ////////////////////////////////////////////////////////////
+                // LOGIN APP
+                ///////////////////////////////////////////////////////////
+                console.log('Login');
+                facebookConnectPlugin.login(['email'], fbLoginSuccess, fbLoginError);
+
+
+            }
+            else {
+            // Web page
+
+            ////////////////////////////////////////////////////////
+            // LOGIN WEB
+            ////////////////////////////////////////////////////
+            facebookConnectPlugin.browserInit('1379299842395038');
+            facebookConnectPlugin.login(['email'], fbLoginSuccess, fbLoginError);
+
+        };
+
     };
 
 
@@ -155,28 +162,18 @@ angular.module('ionapp.controllers', []).controller('ComListController', ['$scop
         fblogout.resolve(response);
     };
     var flogouterror = function (error) {
-
+        console.log(error);
         fblogout.reject(error);
     };
     ////////////////////////////////////////////
     // LOGOUT
+    // TODO
     ////////////////////////////////////////////
 
     facebookConnectPlugin.logout(fblogoutsucess, flogouterror);
-
-    fblogout.then(function () {
-        console.log('you are logout and redirect to login page');
-        $state.go('login');
-    }, function (error) {
-        console.log(error);
-    })
-    /*;fblogoutsucess = function(){
-        console.log('you are logout and redirect to login page');
-        $state.go('login');
-    };
-    flogouterror = function(){
-    console.log(flogouterror);
-    }*/
+    console.log("logout");
+    Parse.User.logOut();
+    $state.go('login');
     /*var logout = function () {
         facebookConnectPlugin.logout(
             function (response) { alert(JSON.stringify(response)) },

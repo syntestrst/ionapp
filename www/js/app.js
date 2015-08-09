@@ -8,7 +8,7 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
 
     // Use this method to register work which should be performed
     // when the injector is done loading all modules.
-    .run(function ($rootScope, $ionicPlatform, $cookieStore, $state, facebookAppId) {
+    .run(function ($rootScope, $ionicPlatform, $cookieStore, $state) {
 
         ////////////////////////////////////////////////////////
         // Device Plugin injected by ionic ho yeah.
@@ -27,20 +27,30 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
 
         });
         ///////////////////////////////////////////////////////////////////
+        //// State Change Events
         //// https://docs.angularjs.org/api/ng/service/$rootScope
+        //// https://github.com/angular-ui/ui-router/wiki
+        //// https://parse.com/docs/js/guide#users
+        //// Whenever you use any signup or login methods, the user is cached in localStorage.
+        //// You can treat this cache as a session, and automatically assume the user is logged in
         /////////////////////////////////
-        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+        $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
+            var tostatev = toState.data.requireLogin
+            if( tostatev && !Parse.User.current()) {
+               event.preventDefault();
+                // transitionTo() promise will be rejected with
+                // a 'transition prevented' error*/
+                $state.transitionTo('login');
+                /*console.log(event.name);
+                console.log(toState.name);*/
 
-            if(toState.data.require && !Parse.User.current()) {
-                $state.transitionTo("login");
-                event.preventDefault();
             }
             });
 
     }).config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
         //DISABLE ALL CACHE
-        $ionicConfigProvider.views.maxCache(0);
+         $ionicConfigProvider.views.maxCache(0);
 
         // BEGIN STATE
         $stateProvider
@@ -48,9 +58,10 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
             //
             .state('/HomeStatusController', {
                 url: "/HomeStatusController",
+                templateUrl: 'views/home-status.html',
                 controller: 'HomeStatusController',
                 data: {
-                    require: false,
+                    requireLogin: true,
                 },
 
             }).state('login', {
@@ -58,14 +69,14 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
                 templateUrl: "views/login.html",
                 controller: 'LoginController',
                 data: {
-                    require: false
+                    requireLogin: false
                 },
 
             }).state('logout',{
                 /*url : '/logout',*/
                 controller: 'LogoutController',
                 data: {
-                    require: false
+                    requireLogin: false
                 },
 
             })
@@ -75,7 +86,7 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
                 controller: 'SlideController',
                 templateUrl: 'views/slide.html',
                 data: {
-                    require: false
+                    requireLogin: true
                 },
             })
             .state('slidemenu.comments', {
@@ -83,7 +94,7 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
                 controller: 'ComListController',
                 templateUrl: 'views/comments.html',
                 data: {
-                    require: false
+                    requireLogin: true
                 },
 
             }).state('createComment', {
@@ -91,7 +102,7 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
                 controller: 'ComCreateController',
                 templateUrl: 'views/create-comments.html',
                 data: {
-                    require: false
+                    requireLogin: true
                 },
 
             }).state('editcomment', {
@@ -100,13 +111,14 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
                 templateUrl: 'views/edit-comment.html',
                 /*cache: false // system de cache de ionic.*/
                 data: {
-                    require: false
+                    requireLogin: true
                 },
 
             });
         // default route
         // call url not state
-        $urlRouterProvider.otherwise("/HomeStatusController");
+        // replace . /
+        $urlRouterProvider.otherwise("/slidemenu/comments");
 
     });
     /*.config(["$cordovaFacebook", function ($cordovaFacebook, facebookAppId) {
