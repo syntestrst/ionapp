@@ -14,18 +14,54 @@
     </ion-nav-bar>
 
     <ion-content>
-        <div class="buttons">
-            <button class="button button-icon icon ion-ios-minus-outline" ng-click="data.showDelete = !data.showDelete;"></button>
+        <div class="list card " ng-repeat="item in items">
 
+            <div class="item item-body">
+                <a class="item item-thumbnail-left" href="#">
+                    <img src="cover.jpg">
+                </a>
+                <p>
+                    {{item.content}}
+                </p>
+                <p>
+                    <a href="#" class="subdued">1 Like</a>
+                    <a href="#" class="subdued">5 Comments</a>
+                </p>
+            </div>
+
+            <div class="item tabs tabs-secondary tabs-icon-left">
+                <a class="tab-item" href="#">
+                    <i class="icon ion-thumbsup"></i>
+                    Like
+                </a>
+                <a class="tab-item" href="#">
+                    <i class="icon ion-chatbox"></i>
+                    Comment
+                </a>
+                <a class="tab-item" href="#">
+                    <i class="icon ion-share"></i>
+                    Share
+                </a>
+            </div>
 
         </div>
+    </ion-content>
+
+</ion-view>
+
+
+<!--<ion-content>
+        <div class="buttons">
+            <button class="button button-icon icon ion-ios-minus-outline" ng-click="data.showDelete = !data.showDelete;"></button>
+        </div>
+
         <ion-list show-delete="data.showDelete">
             <ion-item ng-repeat="item in items | orderBy: '-createdAt'"
                       item="item"
                       href="#/comment/edit/{{item.objectId}}/{{item.content}}">
                 <div>
                     <p>{{item.content}}<p>
-                    <!--{{item.createdAt}}-->
+                    &lt;!&ndash;{{item.createdAt}}&ndash;&gt;
                 </div>
 
                 <ion-delete-button class="ion-minus-circled"
@@ -34,6 +70,5 @@
 
             </ion-item>
         </ion-list>
-    </ion-content>
-    
-</ion-view>
+
+    </ion-content>-->

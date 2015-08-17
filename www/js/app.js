@@ -3,12 +3,12 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controllers', 'ionapp.services','ionapp.constants'])
+angular.module('starter', ['ionic', 'ionapp.controllers', 'ionapp.services','ionapp.constants'])
 
 
     // Use this method to register work which should be performed
     // when the injector is done loading all modules.
-    .run(function ($rootScope, $ionicPlatform, $cookieStore, $state) {
+    .run(function ($rootScope, $ionicPlatform, $state) {
 
         ////////////////////////////////////////////////////////
         // Device Plugin injected by ionic ho yeah.
@@ -61,8 +61,8 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
                 templateUrl: 'views/home-status.html',
                 controller: 'HomeStatusController',
                 data: {
-                    requireLogin: true,
-                },
+                    requireLogin: true
+                }
 
             }).state('login', {
                 url: "/login",
@@ -70,14 +70,14 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
                 controller: 'LoginController',
                 data: {
                     requireLogin: false
-                },
+                }
 
             }).state('logout',{
                 /*url : '/logout',*/
                 controller: 'LogoutController',
                 data: {
                     requireLogin: false
-                },
+                }
 
             })
             .state('slidemenu', {
@@ -87,7 +87,7 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
                 templateUrl: 'views/slide.html',
                 data: {
                     requireLogin: true
-                },
+                }
             })
             .state('slidemenu.comments', {
                 url: '/comments',
@@ -95,7 +95,7 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
                 templateUrl: 'views/comments.html',
                 data: {
                     requireLogin: true
-                },
+                }
 
             }).state('createComment', {
                 url: '/comment/new',
@@ -103,7 +103,7 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
                 templateUrl: 'views/create-comments.html',
                 data: {
                     requireLogin: true
-                },
+                }
 
             }).state('editcomment', {
                 url: '/comment/edit/:id/:content',
@@ -112,7 +112,7 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
                 /*cache: false // system de cache de ionic.*/
                 data: {
                     requireLogin: true
-                },
+                }
 
             });
         // default route
@@ -121,7 +121,3 @@ angular.module('starter', ['ionic', 'ngCookies', 'ngCordova', 'ionapp.controller
         $urlRouterProvider.otherwise("/slidemenu/comments");
 
     });
-    /*.config(["$cordovaFacebook", function ($cordovaFacebook, facebookAppId) {
-        // This is only required for the JavaScript API
-        $cordovaFacebookProvider.setAppID(facebookAppId, "v2.0");
-    }]);*/
