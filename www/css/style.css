@@ -1,1 +1,17 @@
 /* Empty. Add your own CSS if you like */
+
+
+#home-login{
+    width: 211px;
+    height: 111px;
+    margin: 211px auto;
+
+
+}
+#btn-facebook {
+    float: left;
+}
+
+#btn-register {
+    float: right;
+}
