@@ -23,24 +23,46 @@ angular.module('ionapp.controllers', []).controller('ComListController', ['$scop
         $scope.items.splice($scope.items.indexOf(item), 1);
     }
 
-}]).controller('ComCreateController', ['$scope', 'Comment', '$state', function ($scope, Comment, $state) {
+}]).controller('ComCreateController', ['$scope', 'Comment','Camera','$state', function ($scope, Camera,Comment, $state) {
 
-    $scope.Comment = {};
+    $scope.takePicture = function(){
+        navigator.camera.getPicture(function(imageURI) {
 
-    $scope.create = function () {
+                // imageURI is the URL of the image that we can use for
+                // an <img> element or backgroundImage.
+                $scope.picture =  imageURI;
+
+            }, function(err) {
+
+                // Ruh-roh, something bad happened
+
+            },
+            {    quality: 75,
+                targetWidth: 100,
+                targetHeight: 100,
+                saveToPhotoAlbum: false }
+        );
+    };
+
+    //$scope.Comment = {};
+    //
+    //$scope.create = function () {
+    //
+    //
+    //    /*The argument to the method Comment.create()
+    //     is an object which is serialized and sent as JSON request body*/
+    //    Comment.create(
+    //        {
+    //            content: $scope.Comment.content
+    //        }
+    //
+    //    ).success(function (data) {
+    //        $state.go('slidemenu.comments');
+    //    });
+    //}
 
 
-        /*The argument to the method Comment.create()
-         is an object which is serialized and sent as JSON request body*/
-        Comment.create(
-            {
-                content: $scope.Comment.content
-            }
 
-        ).success(function (data) {
-            $state.go('slidemenu.comments');
-        });
-    }
 
 }]).controller('ComEditController', ['$scope', 'Comment', '$state', '$stateParams', function ($scope, Comment, $state, $stateParams) {
 

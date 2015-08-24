@@ -1,24 +1,32 @@
-<ion-header-bar class="bar-stable">
+<ion-header-bar class="bar-energized">
     <div class="buttons">
-        <button class="button" ui-sref="slidemenu.comments">Retour</button>
-        <h1 class="title">Création d'une Annecdote</h1>
+        <button class="button" ui-sref="slidemenu.comments">Back</button>
+        <!-- UI-SREF => A directive that binds a link (<a> tag) to a state.
+        If the state has an associated URL,
+        the directive will automatically generate & update the href attribute via the $state.href() method.
+        Clicking the link will trigger a state transition with optional parameters.
+         Also middle-clicking, right-clicking,
+         and ctrl-clicking on the link will be handled natively by the browser.-->
+        <h1 class="title">Create LivePic</h1>
     </div>
 </ion-header-bar>
 
 <ion-content>
-    <div>
-        <ion-list>
-            <li class="item item-input item-stacked-label">
-                <textarea type="text"
-                          placeholder="place holder"
-                          name="content"
-                          rows="10"
-                          ng-model="Comment.content"
-                          required></textarea>
-            </li>
-            <ion-button class="button button-block button-stable" ng-click="create()">
-                Ajouter
-            </ion-button>
-        </ion-list>
+
+    <div class="list card">
+        <div class="item item-body">
+            <img ng-src="{{picture}}">
+            <p>
+                {{Comment.content}}
+            </p>
+        </div>
     </div>
+
+
 </ion-content>
+
+<div class="bar bar-footer bar-energized">
+    <button class="button" ng-click="takePicture()">Camera</button>
+    <button class="button">CreateLivePic</button>
+    <button class="button pull-right">Gallery</button>
+</div>

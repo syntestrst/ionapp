@@ -1,52 +1,49 @@
 <!-- Adds a fixed header bar above some content. IONIC-->
-<ion-view view-title="Titre Aplication" >
+<ion-view view-title="LivePic" >
 
-    <ion-nav-bar class="bar-stable">
+    <ion-nav-bar class="bar-energized">
         <ion-nav-back-button>
         </ion-nav-back-button>
 
         <ion-nav-buttons side="left" title="test">
             <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
-            <button class="button" ui-sref="createComment">New</button>
         </ion-nav-buttons>
 
 
     </ion-nav-bar>
 
     <ion-content>
-        <div class="list card " ng-repeat="item in items">
+        <div class="list card " ng-repeat="item in items | orderBy: '-createdAt'"  >
 
-            <div class="item item-body">
-                <a class="item item-thumbnail-left" href="#">
-                    <img src="cover.jpg">
-                </a>
-                <p>
+                <div class="item item-divider">
+                    Title Photo
+                </div>
+            <a href="#/comment/edit/{{item.objectId}}/{{item.content}}" >
+                <div class="item item-text-wrap">
                     {{item.content}}
-                </p>
-                <p>
-                    <a href="#" class="subdued">1 Like</a>
-                    <a href="#" class="subdued">5 Comments</a>
-                </p>
-            </div>
-
+                </div>
+            </a>
+                <div class="item item-divider">
+                    Ratings: 10
+                </div>
             <div class="item tabs tabs-secondary tabs-icon-left">
-                <a class="tab-item" href="#">
-                    <i class="icon ion-thumbsup"></i>
-                    Like
-                </a>
-                <a class="tab-item" href="#">
-                    <i class="icon ion-chatbox"></i>
-                    Comment
-                </a>
-                <a class="tab-item" href="#">
-                    <i class="icon ion-share"></i>
-                    Share
-                </a>
-            </div>
+            <a class="tab-item" href="#">
+                <i class="icon ion-thumbsup"></i>
+                Like
+            </a>
+            <a class="tab-item" href="#">
+                <i class="icon ion-chatbox"></i>
+                Comment
+            </a>
+
+        </div>
 
         </div>
     </ion-content>
 
+    <div ui-sref="createComment" class="bar bar-footer bar-energized">
+        <div class="title" >Create LivePic</div>
+    </div>
 </ion-view>
 
 
