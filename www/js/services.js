@@ -85,7 +85,10 @@ angular.module('ionapp.services',[]).factory('Comment',['$http', 'PARSE_CREDENTI
                     q.reject(err);
                 }, options);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
                 return q.promise;
             }
         }
