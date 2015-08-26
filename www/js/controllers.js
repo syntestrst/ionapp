@@ -26,22 +26,51 @@ angular.module('ionapp.controllers', []).controller('ComListController', ['$scop
 }]).controller('ComCreateController', ['$scope', 'Comment','Camera','$state', function ($scope, Camera,Comment, $state) {
 
     $scope.takePicture = function(){
-        navigator.camera.getPicture(function(imageURI) {
+    /////////////////////////////////////////////////////////////////////////////////
+        /* navigator.camera.getPicture( cameraSuccess, cameraError, [ cameraOptions ] )
+        Takes a photo using the camera, or retrieves a photo from the device's image gallery.
+        The image is passed to the success callback as a base64-encoded String,
+        or as the URI for the image file. The method itself returns a
+        CameraPopoverHandle object that can be used to reposition the file selection popover.*/
+    /////////////////////////////////////////////////////////////////////////////////
+        Camera.DestinationType = {
+            DATA_URL : 0,      // Return image as base64-encoded string
+            FILE_URI : 1,      // Return image file URI
+            NATIVE_URI : 2     // Return image native URI (e.g., assets-library:// on iOS or content:// on Android)
+        };
+        Camera.PictureSourceType = {
+            PHOTOLIBRARY : 0,
+            CAMERA : 1,
+            SAVEDPHOTOALBUM : 2
+        };
+
+        Camera.EncodingType = {
+            JPEG : 0,               // Return JPEG encoded image
+            PNG : 1                 // Return PNG encoded image
+        };
+
+        navigator.camera.getPicture(function(imageURI){
 
                 // imageURI is the URL of the image that we can use for
                 // an <img> element or backgroundImage.
                 $scope.picture =  imageURI;
+
 
             }, function(err) {
 
                 // Ruh-roh, something bad happened
 
             },
-            {    quality: 75,
-                targetWidth: 100,
+            {   quality : 75,
+                destinationType : 2,
+                sourceType : 1,
+                allowEdit : true,
+                encodingType: 0,
+                targetWidth: 300,
                 targetHeight: 100,
-                saveToPhotoAlbum: false }
-        );
+                saveToPhotoAlbum: false ,
+            });
+
     };
 
     //$scope.Comment = {};
