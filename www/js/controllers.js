@@ -26,7 +26,7 @@ angular.module('ionapp.controllers', []).controller('ComListController', ['$scop
 }]).controller('ComCreateController', ['$scope', 'Comment','Camera','$state', function ($scope, Camera,Comment, $state) {
 
     $scope.takePicture = function(){
-<<<<<<< HEAD
+
     /////////////////////////////////////////////////////////////////////////////////
         /* navigator.camera.getPicture( cameraSuccess, cameraError, [ cameraOptions ] )
         Takes a photo using the camera, or retrieves a photo from the device's image gallery.
@@ -47,28 +47,23 @@ angular.module('ionapp.controllers', []).controller('ComListController', ['$scop
 
         Camera.EncodingType = {
             JPEG : 0,               // Return JPEG encoded image
-            PNG : 1                 // Return PNG encoded image
+            PNG : 1                 // Return PNG encoded image test
         };
 
-        navigator.camera.getPicture(function(imageURI){
-=======
+
         navigator.camera.getPicture(function(imageURI) {
->>>>>>> origin/master
+
 
                 // imageURI is the URL of the image that we can use for
                 // an <img> element or backgroundImage.
                 $scope.picture =  imageURI;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
             }, function(err) {
 
                 // Ruh-roh, something bad happened
 
             },
-<<<<<<< HEAD
+
             {   quality : 75,
                 destinationType : 2,
                 sourceType : 1,
@@ -76,16 +71,9 @@ angular.module('ionapp.controllers', []).controller('ComListController', ['$scop
                 encodingType: 0,
                 targetWidth: 300,
                 targetHeight: 100,
-                saveToPhotoAlbum: false ,
+                saveToPhotoAlbum: false
             });
 
-=======
-            {    quality: 75,
-                targetWidth: 100,
-                targetHeight: 100,
-                saveToPhotoAlbum: false }
-        );
->>>>>>> origin/master
     };
 
     //$scope.Comment = {};

@@ -50,11 +50,8 @@ angular.module('starter', ['ionic', 'ionapp.controllers', 'ionapp.services','ion
     }).config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
         //DISABLE ALL CACHE
-<<<<<<< HEAD
         // $ionicConfigProvider.views.maxCache(0);
-=======
-         $ionicConfigProvider.views.maxCache(0);
->>>>>>> origin/master
+
 
         // BEGIN STATE
         $stateProvider
