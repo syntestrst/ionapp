@@ -6,9 +6,6 @@
  * The simplest controller is just a function. All arguments are interpreted by dependency injection mechanism.
  * So when we define argument named $scope,
  * we will get new scope created for that controller. Any typo here will break the script.
- *
- *
- *
  */
 
 angular.module('ionapp.controllers', []).controller('ComListController', ['$scope', 'Comment', function ($scope, Comment) {
@@ -27,13 +24,10 @@ angular.module('ionapp.controllers', []).controller('ComListController', ['$scop
 
     $scope.takePicture = function(){
 
-    /////////////////////////////////////////////////////////////////////////////////
-        /* navigator.camera.getPicture( cameraSuccess, cameraError, [ cameraOptions ] )
-        Takes a photo using the camera, or retrieves a photo from the device's image gallery.
-        The image is passed to the success callback as a base64-encoded String,
-        or as the URI for the image file. The method itself returns a
-        CameraPopoverHandle object that can be used to reposition the file selection popover.*/
-    /////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////
+        /// OPTIONS CAMERA CORDOVA
+        /////////////////////////////////////////////////////
+
         Camera.DestinationType = {
             DATA_URL : 0,      // Return image as base64-encoded string
             FILE_URI : 1,      // Return image file URI
@@ -50,10 +44,14 @@ angular.module('ionapp.controllers', []).controller('ComListController', ['$scop
             PNG : 1                 // Return PNG encoded image test
         };
 
-
+        /////////////////////////////////////////////////////////////////////////////////
+        /* navigator.camera.getPicture( cameraSuccess, cameraError, [ cameraOptions ] )
+         Takes a photo using the camera, or retrieves a photo from the device's image gallery.
+         The image is passed to the success callback as a base64-encoded String,
+         or as the URI for the image file. The method itself returns a
+         CameraPopoverHandle object that can be used to reposition the file selection popover.*/
+        /////////////////////////////////////////////////////////////////////////////////
         navigator.camera.getPicture(function(imageURI) {
-
-
                 // imageURI is the URL of the image that we can use for
                 // an <img> element or backgroundImage.
                 $scope.picture =  imageURI;
